@@ -4,21 +4,27 @@ import requests
 from dotenv import load_dotenv
 
 urls = (
-
+    '/(.*)', 'zipcode',
 )
 
 app = web.application(urls, globals())
-r = requests.get('api.openweathermap.org/data/2.5/weather?zip={zip code},{country code}&appid={REACT_APP_WEATHER_API_KEY}', auth=('USER', 'PASSWORD'))
-
 
 class zipcode:
-    def GET(self, unit, value):
-        web.header('Content-Type', 'application/json') # text/xml
-        z = zip({unit: float(value)})
-        return z.toJSON()
-
-
-class zip:
+    def __init__(self,params):
+        if len(params) == 1:
+            web.header('Content-Type', 'application/json')
+            r = requests.get('api.openweathermap.org/data/2.5/weather?zip={zip code},{country code}&appid=REACT_APP_WEATHER_API_KEY' ,auth=('USER', 'PASSWORD'))
+            data = r.json()
+            #dictionnaire
+            data = {
+                "temp" :
+                "temp_min" :
+                "temp_max" :
+                "weather" :
+            }
+        if len(params) != 1:
+            raise Exception('Invalid ZIP code')
+        return json.dumps(data)
 
 
 if __name__ == "__main__":
